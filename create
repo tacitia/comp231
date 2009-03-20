@@ -9,8 +9,7 @@ CREATE TABLE customers (
 			 payment_method = 'auto-pay'),
 	card_number NUMBER(20),
 	card_owner VARCHAR2(50),
-	card_expiry_date DATE
-	);
+	card_expiry_date DATE	);
 	
 CREATE TABLE subscriptions (
 	subscription_id VARCHAR2(20) PRIMARY KEY,

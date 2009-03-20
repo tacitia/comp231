@@ -45,7 +45,50 @@ END;
 
 
 
+END;	
+	
+
+//What if the installation address of an update is the same as the old one?
 CREATE OR REPLACE TRIGGER check_unique_installation_address
 BEFORE INSERT OR UPDATE OF installation address ON subscriptions
 DECLARE
 	installation_address_not_unique;
+BEGIN
+	FOR R IN (
+		SELECT * FROM subscriptions
+		)LOOP
+			IF :NEW.installation_address = R.installation_address THEN
+				IF EXISTS (
+					SELECT * FROM BB_plan_subscriptions
+					WHERE subscription_id = R.subscription_id
+					) THEN
+					RAISE installation_address_not_unique;
+				END IF;
+			END IF;
+		END LOOP;
+EXCEPTION
+	WHEN installation_address_not_unique THEN
+	DBMS_OUTPUT.PUT_LINE('BB subscription installation address already exists');
+END;
+
+
+//What will happen during update?
+CREATE OR REPLACE TRIGGER check_credit_card_info
+AFTER INSERT OR UPDATE OF payment_meghod ON customers
+DECLARE
+	missing_credit_card_info;
+BEGIN
+	IF :NEW.payment_method = 'auto-pay' THEN
+		IF (
+			:NEW.card_number = NULL OR
+			:NEW.card_owner = NULL OR
+			:NEW.card_expiry_date = NULL
+			) THEN 
+			RAISE missing_credit_card_info;
+		END IF;
+	END IF;
+EXCEPTION
+	WHEN missing_credit_card_info;
+	DBMS_OUTPUT.PUT_LINE('Missing credit card information');
+END;
+		
