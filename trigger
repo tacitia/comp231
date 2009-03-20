@@ -19,7 +19,8 @@ EXCEPTION
 	DBMS_OUTPUT.PUT_LINE('Each customer can only subscribe at most three service plans!');
 END;
 /
-	
+
+
 CREATE OR REPLACE TRIGGER check_service_MinNum
 BEFORE INSERT OR UPDATE hkid ON customers
 DECLARE
@@ -44,10 +45,6 @@ END;
 /
 
 
-
-END;	
-	
-
 //What if the installation address of an update is the same as the old one?
 CREATE OR REPLACE TRIGGER check_unique_installation_address
 BEFORE INSERT OR UPDATE OF installation address ON subscriptions
@@ -70,6 +67,7 @@ EXCEPTION
 	WHEN installation_address_not_unique THEN
 	DBMS_OUTPUT.PUT_LINE('BB subscription installation address already exists');
 END;
+/
 
 
 //What will happen during update?
@@ -91,4 +89,24 @@ EXCEPTION
 	WHEN missing_credit_card_info;
 	DBMS_OUTPUT.PUT_LINE('Missing credit card information');
 END;
-		
+/
+
+
+CREATE OR REPLACE TRIGGER BB_subscription_delete_cascade
+BEFORE DELETE ON BB_plan_subscriptions
+FOR EACH ROW
+BEGIN
+	DELETE FROM subscriptions
+	WHERE subscription_id = :OLD.subscription_id;
+END;
+/
+
+
+CREATE OR REPLACE TRIGGER HT_subscription_delete_cascade
+BEFORE DELETE ON HT_plan_subscriptions
+FOR EACH ROW
+BEGIN
+	DELETE FROM subscriptions
+	WHERE subscription_id = :OLD.subscription_id;
+END;
+/
