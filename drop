@@ -1,0 +1,4 @@
+DROP TABLE customers;
+DROP TABLE broadband_plan_subscription;
+DROP TABLE home_telephone_plan_subscription;
+DROP TABLE service_plan;

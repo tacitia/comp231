@@ -1,0 +1,44 @@
+CREATE TABLE customers (
+	hkid VARCHAR2(20) PRIMARY KEY,
+	name VARCHAR2(50)  NOT NULL, 
+	phone_number NUMBER(20) NOT NULL,
+	billing_address VARCHAR2(100) NOT NULL,
+	payment_method VARCHAR2(8) NOT NULL,
+	card_number NUMBER(20),
+	card_owner VARCHAR2(50),
+	card_expiry_date DATE,
+	//num_of_subscriptions NUMBER(1)
+	);
+	
+CREATE TABLE subscriptions (
+	subscription_id VARCHAR2(20) PRIMARY KEY,
+	activation_data DATE NOT NULL,
+	installation_address VARCHAR2(100) NOT NULL,
+	hkid VARCHAR2(20) NOT NULL
+		REFERENCES customers(hkid),
+	plan_code VARCHAR2(20) NOT NULL
+		REFERENCES service_plans(plan_code)
+		);
+		
+CREATE TABLE BB_plan_subscriptions (
+	subscription_id VARCHAR2(20) PRIMARY KEY
+		REFERENCES subscriptions(subscription_id),
+	email VARCHAR2(30) NOT NULL,
+	password VARCHAR2(20) NOT NULL
+	);
+	
+CREATE TABLE HT_plan_subscriptions (
+	subscription_id VARCHAR2(20) PRIMARY KEY
+		REFERENCES subscriptions(subscription_id),
+	//phone_number NUMBER(20) NOT NULL, UNIQUE,
+	);
+	
+CREATE TABLE service_plans (
+	plan_code NUMBER(4) PRIMARY KEY,
+	name VARCHAR2(50) NOT NULL,
+	service_type VARCHAR2(2) NOT NULL,
+	description VARCHAR2(100) NOT NULL,
+	contract_period VARCHAR2(20) NOT NULL,
+	monthly_fee VARCHAR2(10) NOT NULL
+	);
+	
