@@ -1,0 +1,12 @@
+DROP TABLE BB_plan_subscriptions;
+DROP TABLE HT_plan_subscriptions;
+DROP TABLE subscriptions;
+DROP TABLE service_plans;
+DROP TABLE customers;
+DROP TRIGGER check_service_MaxNum;
+DROP TRIGGER check_service_MinNum;
+DROP TRIGGER check_unique_installation_address;
+DROP TRIGGER check_credit_card_info;
+DROP TRIGGER BB_subscription_delete_cascade;
+DROP TRIGGER HT_subscription_delete_cascade;
+DROP TRIGGER delete_customer;
