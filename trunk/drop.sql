@@ -1,8 +1,3 @@
-DROP TABLE BB_plan_subscriptions;
-DROP TABLE HT_plan_subscriptions;
-DROP TABLE subscriptions;
-DROP TABLE service_plans;
-DROP TABLE customers;
 DROP TRIGGER check_service_MaxNum;
 DROP TRIGGER check_unique_BB_address;
 DROP TRIGGER check_credit_card_info;
@@ -11,3 +6,8 @@ DROP TRIGGER check_HT_type;
 DROP TRIGGER hkid_update_cascade;
 DROP TRIGGER subscription_id_update_cascade;
 DROP TRIGGER plan_code_update_cascade;
+DROP TABLE BB_plan_subscriptions;
+DROP TABLE HT_plan_subscriptions;
+DROP TABLE subscriptions;
+DROP TABLE service_plans;
+DROP TABLE customers;
